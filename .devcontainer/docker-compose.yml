@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  dev_1:
+    image: my-playground
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        VARIANT: "1.6.7"
+        PROJECT_DIR: /home/jovyan/MyPlayground
+    init: true
+    container_name: my-playground
+    environment:
+      # https://cheaster.blogspot.com/2020/06/docker-composeyml-container-timezone.html
+      - TZ=Asia/Taipei
+    volumes:
+      # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
+      - ..:/home/jovyan/MyPlayground
+      # Persistent the julia depot
+      - julia-depot:/home/jovyan/.julia
+      # Avoid reinstall vscode extensions
+      - vscode-extensions:/home/jovyan/.vscode-server/extensions
+      # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
+      # - /var/run/docker.sock:/var/run/docker.sock
+    # Overrides default command so things don't shut down after the process ends.
+    command: sh -c "inv env.julia-daemon && sleep infinity"
+
+volumes:
+  julia-depot:
+  vscode-extensions:

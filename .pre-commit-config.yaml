@@ -1,0 +1,37 @@
+default_stages: [push]
+repos:
+  # ⚠️ DVC is used later to reduce development complexity at the beginning of the project
+  - repo: https://github.com/iterative/dvc
+    # use a specific version (e.g. 1.8.1) instead of master if you don't want
+    # to use the upstream version
+    rev: 2.9.3
+    hooks: # version control on data
+      - id: dvc-pre-commit
+        language_version: python3
+        stages:
+          - commit
+      - id: dvc-pre-push
+        # use s3/gs/etc instead of all to only install specific cloud support
+        additional_dependencies: [".[s3]", ".[gdrive]"]
+        language_version: python3
+        stages:
+          - push
+      - always_run: true
+        id: dvc-post-checkout
+        language_version: python3
+        stages:
+          - post-checkout
+  # - repo: local
+  #   hooks: # actions triggered when pushing to Github
+  #     - id: style-reformat
+  #       name: style-reformat
+  #       stages: [push]
+  #       language: system
+  #       pass_filenames: false
+  #       entry: inv style.reformat
+  #     - id: test
+  #       name: test
+  #       stages: [push]
+  #       language: system
+  #       pass_filenames: false
+  #       entry: inv test

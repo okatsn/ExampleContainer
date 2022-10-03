@@ -1,0 +1,66 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
+// https://github.com/microsoft/vscode-dev-containers/tree/master/containers/docker-existing-dockerfile
+{
+    "name": "my-playground",
+    // ===== Use Docker Compose =====
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "dev_1",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/home/jovyan/MyPlayground",
+    "extensions": [
+        "ms-azuretools.vscode-docker",             // Docker
+        "julialang.language-julia",                // julia
+        "colinfang.markdown-julia",
+        "mhutchie.git-graph",                      // git and github
+        "donjayamanne.githistory",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "mathieu.vscode-github-actions",
+        "ms-python.python",                        // python
+        "ms-python.vscode-pylance",
+        "editorconfig.editorconfig",               // vscode
+        "shd101wyy.markdown-preview-enhanced",     // markdown
+        "streetsidesoftware.code-spell-checker",   // other code
+        "redhat.vscode-yaml", 
+        "bungcip.better-toml",                     
+        "bierner.emojisense",
+        "shardulm94.trailing-spaces",              // format and highlight
+        "christian-kohler.path-intellisense",
+        "cliffordfajardo.hightlight-selections-vscode",
+        "wdawson.better-kill-ring",                // other
+
+        "ms-vscode.live-server",
+        "gruntfuggly.todo-tree",
+        "ritwickdey.liveserver",
+        "nobuhito.printcode",
+        "mutantdino.resourcemonitor",
+    ],
+    "settings": {
+        "julia.environmentPath": "/home/jovyan/MyPlayground",
+        "[julia]": {
+            // https://github.com/invenia/BlueStyle#vs-code-settings
+            "editor.detectIndentation": false,
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "files.insertFinalNewline": true,
+            "files.trimFinalNewlines": true,
+            "files.trimTrailingWhitespace": true,
+            "editor.selectionHighlight": true,
+            "editor.rulers": [
+                92
+            ]
+        },
+        "highlightSelections.borderStyle": "solid",
+        "highlightSelections.borderWidth": "10px",
+        "python.terminal.activateEnvironment": false,
+        "git.checkoutType": [
+            "local",
+            // "remote",
+            "tags"
+        ],
+        "files.associations": {
+            "*.dvc": "yaml",
+            "dvc.lock": "yaml"
+        }
+    }
+}
