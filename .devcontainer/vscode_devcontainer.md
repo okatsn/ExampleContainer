@@ -36,6 +36,7 @@ digraph D {
 
 ```
 
+> ⚠️ When you apply directly this repository, **remember to rename** all the keyword *ExampleContainer* and *example-container* to the corresponding folder name and your project name.
 
 ### Brief note for `devcontainer.json`
 `devcontainer.json` defines how to access (or create) a development container. It does the followings: 
@@ -78,7 +79,7 @@ In `".devcontainer/docker-compose.yml"`:
 - ⚠️ Variable definitions under `args` overwrite the definition in `".devcontainer/Dockerfile"` **WHEN** 
     - `"dockerComposeFile": "docker-compose.yml"` is specified in `".devcontainer/devcontainer.json"`, **and** 
     - `dockerfile: .devcontainer/Dockerfile` is specified in `".devcontainer/docker-compose.yml"`.
-- In this case, a variable `VARIANT` should always be declared in `".devcontainer/Dockerfile"` no matter whether it is defined in `".devcontainer/docker-compose.yml"` or not.
+- Noted that, for example, the variable `VARIANT` of this case should always be declared in `".devcontainer/Dockerfile"` no matter whether it is defined in `".devcontainer/docker-compose.yml"` or not.
 
 ##### More about `volumes` and named volume
 - Defining a named volume defines a special space managed by Docker in the host machine.

@@ -1,12 +1,12 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
 // https://github.com/microsoft/vscode-dev-containers/tree/master/containers/docker-existing-dockerfile
 {
-    "name": "my-playground",
+    "name": "example-container",
     // ===== Use Docker Compose =====
     "dockerComposeFile": "docker-compose.yml",
     "service": "dev_1",
     "shutdownAction": "stopCompose",
-    "workspaceFolder": "/home/jovyan/MyPlayground",
+    "workspaceFolder": "/home/jovyan/ExampleContainer",
     "extensions": [
         "ms-azuretools.vscode-docker",             // Docker
         "julialang.language-julia",                // julia
@@ -18,7 +18,7 @@
         "mathieu.vscode-github-actions",
         "ms-python.python",                        // python
         "ms-python.vscode-pylance",
-        "editorconfig.editorconfig",               // vscode
+        "editorconfig.editorconfig",               // vscode: use .editorconfig at PROJECT_DIR
         "shd101wyy.markdown-preview-enhanced",     // markdown
         "streetsidesoftware.code-spell-checker",   // other code
         "redhat.vscode-yaml", 
@@ -36,7 +36,7 @@
         "mutantdino.resourcemonitor",
     ],
     "settings": {
-        "julia.environmentPath": "/home/jovyan/MyPlayground",
+        "julia.environmentPath": "/home/jovyan/ExampleContainer",
         "[julia]": {
             // https://github.com/invenia/BlueStyle#vs-code-settings
             "editor.detectIndentation": false,

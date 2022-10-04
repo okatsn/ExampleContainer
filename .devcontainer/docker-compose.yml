@@ -2,21 +2,21 @@ version: '3'
 
 services:
   dev_1:
-    image: my-playground
+    image: example-container
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
       args:
         VARIANT: "1.6.7"
-        PROJECT_DIR: /home/jovyan/MyPlayground
+        PROJECT_DIR: /home/jovyan/ExampleContainer
     init: true
-    container_name: my-playground
+    container_name: example-container
     environment:
       # https://cheaster.blogspot.com/2020/06/docker-composeyml-container-timezone.html
       - TZ=Asia/Taipei
     volumes:
       # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
-      - ..:/home/jovyan/MyPlayground
+      - ..:/home/jovyan/ExampleContainer
       # Persistent the julia depot
       - julia-depot:/home/jovyan/.julia
       # Avoid reinstall vscode extensions
