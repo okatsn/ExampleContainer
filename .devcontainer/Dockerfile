@@ -38,13 +38,6 @@ ARG PROJECT_DIR=/home/jovyan/project_ToBeOverWritten
 
 WORKDIR $PROJECT_DIR
 
-# TODO: CHECK!! use environment.yml, Project.toml and Manifest.toml to add python and julia packages
-# COPY .devcontainer/environment.yml .devcontainer/Project.toml .devcontainer/Manifest.toml ${PROJECT_DIR}
-# RUN conda env update --file environment.yml \
-#     && rm -f environment.yml \
-#     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
-#     && cp Project.toml Manifest.toml ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`/Project.toml \
-#     && julia -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
 
 # Add python packages and add invoke shell completion
 # installation of rise: equivalent to `conda install -c conda-forge rise` in bash.
@@ -74,6 +67,7 @@ RUN mamba install --quiet --yes \
 # Add julia packages and precompile
 # NOTE: These packages will be added under @#.# (e.g. @v1.6)
 # PackageSpec(name=""), \
+# You can specify version: PackageSpec(name="Pluto", version="0.17"), \
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
@@ -103,6 +97,33 @@ RUN julia -e 'using Pkg; Pkg.update()' \
     '
 
 ENV JULIA_PROJECT=@.
+
+
+
+# KEYNOTE: Alternative approach for setting up the environment: use environment.yml, Project.toml and Manifest.toml to add python and julia packages
+#
+# CHECKPOINT: Failed in the following: 
+# Set up the environment for python, jupyter and etc.:
+# COPY .devcontainer/environment.yml ${PROJECT_DIR}
+# RUN conda env update --file environment.yml \
+#     && rm -f environment.yml \
+#
+# CHECKPOINT: 
+# COPY .devcontainer/environment.yml .devcontainer/Project.toml .devcontainer/Manifest.toml ${PROJECT_DIR}
+# RUN conda env update --file environment.yml \
+#     && rm -f environment.yml \
+#     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
+#     && cp Project.toml Manifest.toml ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`/Project.toml \
+#     && julia -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
+
+
+
+
+
+
+
+
+
 
 # Avoid VS Code extension reinstalls
 # https://code.visualstudio.com/remote/advancedcontainers/avoid-extension-reinstalls
