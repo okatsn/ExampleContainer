@@ -2,21 +2,21 @@ version: '3'
 
 services:
   dev_1:
-    image: example-container
+    image: example-container # SETME: rename your container
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
       args:
         VARIANT: "1.6.7"
-        PROJECT_DIR: /home/jovyan/ExampleContainer
+        PROJECT_DIR: /home/jovyan/ExampleContainer # SETME: rename your container
     init: true
-    container_name: example-container
+    container_name: example-container # SETME: rename your container
     environment:
       # https://cheaster.blogspot.com/2020/06/docker-composeyml-container-timezone.html
       - TZ=Asia/Taipei
     volumes:
       # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
-      - ..:/home/jovyan/ExampleContainer
+      - ..:/home/jovyan/ExampleContainer # SETME: rename your container
       # Persistent the julia depot
       - julia-depot:/home/jovyan/.julia
       # Avoid reinstall vscode extensions

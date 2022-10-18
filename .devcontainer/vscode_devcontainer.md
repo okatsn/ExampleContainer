@@ -37,6 +37,7 @@ digraph D {
 ```
 
 > ⚠️ When you apply directly this repository, **remember to rename** all the keyword *ExampleContainer* and *example-container* to the corresponding folder name and your project name.
+> 💡 Check all the `SETME` tag in this repository.
 
 ### Brief note for `devcontainer.json`
 `devcontainer.json` defines how to access (or create) a development container. It does the followings: 
