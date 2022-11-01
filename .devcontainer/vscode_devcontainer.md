@@ -83,6 +83,9 @@ In `".devcontainer/docker-compose.yml"`:
 
 ##### More about `volumes` and named volume
 - Defining a named volume defines a special space managed by Docker in the host machine.
+- ⚠️ **WARNING**: Different containers may point to the volume of the same name:
+    - Containers at the same host machine shares the same `julia-depot`. It will be inappropriate if two containers have different `Project.toml` but both shares the volume of julia depository of the same name (e.g., `julia-depot`).
+    - It is OK for every containers to share the same `vscode-extensions`, since it is just the depository for vscode extension package files.
 - All of these special spaces (named volumes) is under a directory of the host machine, for example, `"var/lib/docker/..."`
 - ⚠️ Every time you bind a container directory to a named volume, that named volume has to be defined at the same level of `services`. For example: 
     ```
