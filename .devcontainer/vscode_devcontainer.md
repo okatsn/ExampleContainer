@@ -83,9 +83,6 @@ In `".devcontainer/docker-compose.yml"`:
 
 ##### More about `volumes` and named volume
 - Defining a named volume defines a special space managed by Docker in the host machine.
-- ⚠️ **WARNING**: Different containers may point to the volume of the same name:
-    - Containers at the same host machine shares the same `julia-depot`. It will be inappropriate if two containers have different `Project.toml` but both shares the volume of julia depository of the same name (e.g., `julia-depot`).
-    - It is OK for every containers to share the same `vscode-extensions`, since it is just the depository for vscode extension package files.
 - All of these special spaces (named volumes) is under a directory of the host machine, for example, `"var/lib/docker/..."`
 - ⚠️ Every time you bind a container directory to a named volume, that named volume has to be defined at the same level of `services`. For example: 
     ```
@@ -103,7 +100,8 @@ In `".devcontainer/docker-compose.yml"`:
 - You can also check these volumes in the Docker app:
   ![](img/Fig_dockerappvolumes.png)
 - the container's binding volumes won't be synced with git push/pull since they are not in the same directory as `.git`; by the way, `git push`/`git pull`... are done by the container machine.
-
+- **They are not shared** between containers under the same host machine, even if their name is identical.
+- You may set [external volume](https://docs.docker.com/compose/compose-file/compose-file-v3/#external) or [share volume between containers](https://www.baeldung.com/ops/docker-share-volume-multiple-containers#share-data-with-docker-compose).
 
 ##### Every container should have an `image`
 

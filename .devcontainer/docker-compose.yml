@@ -18,7 +18,7 @@ services:
       # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
       - ..:/home/jovyan/ExampleContainer
       # Persistent the julia depot
-      - julia-depot-excon:/home/jovyan/.julia
+      - julia-depot:/home/jovyan/.julia
       # Avoid reinstall vscode extensions
       - vscode-extensions:/home/jovyan/.vscode-server/extensions
       # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
@@ -27,5 +27,5 @@ services:
     command: sh -c "inv env.julia-daemon && sleep infinity"
 
 volumes:
-  julia-depot-excon:
+  julia-depot:
   vscode-extensions:
