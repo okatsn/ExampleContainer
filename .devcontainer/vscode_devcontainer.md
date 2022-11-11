@@ -226,6 +226,14 @@ Here are some examples:
     3. add `command` in `".devcontainer/docker-compose.yml"`
 - For best practice, **all** commands is expected to be executed by the container machine.
 
+## Further Reading
+### Docker - Multiple Stage Builds
+- [docker docs: Multiple-stage builds](https://docs.docker.com/build/building/multi-stage/)
+- [透過 Multiple Stage Builds 編譯出最小的 Docker Image](https://jiepeng.me/2018/06/09/use-docker-multiple-stage-builds)
+- [Multiple FROMs - what it means](https://stackoverflow.com/questions/33322103/multiple-froms-what-it-means)
+
+### [LaTeX Wrokshop](https://github.com/James-Yu/LaTeX-Workshop) with Remote - Containers
+See [Using docker](https://github.com/James-Yu/LaTeX-Workshop/wiki/Install#using-docker). Here is a [sample container](https://github.com/James-Yu/LaTeX-Workshop/tree/master/samples/docker) you can apply directly.
 
 ## References
 - [VS Code: Create a development container](https://code.visualstudio.com/docs/remote/create-dev-container#_use-a-dockerfile)
