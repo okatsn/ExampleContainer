@@ -101,7 +101,8 @@ In `".devcontainer/docker-compose.yml"`:
 - You can also check these volumes in the Docker app:
   ![](img/Fig_dockerappvolumes.png)
 - the container's binding volumes won't be synced with git push/pull since they are not in the same directory as `.git`; by the way, `git push`/`git pull`... are done by the container machine.
-
+- **They are not shared** between containers under the same host machine, even if their name is identical.
+- You may set [external volume](https://docs.docker.com/compose/compose-file/compose-file-v3/#external) or [share volume between containers](https://www.baeldung.com/ops/docker-share-volume-multiple-containers#share-data-with-docker-compose).
 
 ##### Every container should have an `image`
 
