@@ -9,6 +9,7 @@ services:
       args:
         VARIANT: "1.6.7"
         PROJECT_DIR: /home/jovyan/ExampleContainer # SETME: rename your container
+        JULIA_PKG_DEVDIR: /home/jovyan/swc-forecast-insider/temp/dev
     init: true
     container_name: example-container # SETME: rename your container
     environment:

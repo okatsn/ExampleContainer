@@ -18,14 +18,23 @@ RUN apt-get update \
         bash-completion \
         lcov \
         jq \
+        ghostscript \
     && echo $NB_USER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$NB_USER \
     && chmod 0440 /etc/sudoers.d/$NB_USER \
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
-# Install Julia
-ARG VARIANT="1.6.5.ToBeOverWritten"
-# it should be defined here, despite it will be overwritten by that defined in docker-compose.yml
+    # ghostscript for handling eps image files
 
+
+# Install Julia
+ARG VARIANT="what.ever.is.ok.since.it.will.be.overwritten.by.that.in.docker-compose.yml"
+ARG JULIA_PKG_DEVDIR="this.is.into.which.dev.clones.packages."
+
+# Set enviroment variable
+# RUN export JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
+ENV JULIA_PKG_DEVDIR=${JULIA_PKG_DEVDIR}
+
+# it should be defined here, despite it will overwritten by that in docker-compose.yml
 RUN mkdir /opt/julia-${VARIANT} \
     && curl -L https://julialang-s3.julialang.org/bin/linux/x64/`echo ${VARIANT} | cut -d. -f 1,2`/julia-${VARIANT}-linux-x86_64.tar.gz | tar zxf - -C /opt/julia-${VARIANT} --strip=1 \
     && ln -fs /opt/julia-${VARIANT}/bin/julia /usr/local/bin/julia
@@ -33,7 +42,7 @@ RUN mkdir /opt/julia-${VARIANT} \
 # NB_USER is defined in jupyter/minimal-notebook
 USER $NB_USER
 
-ARG PROJECT_DIR=/home/jovyan/project_ToBeOverWritten
+ARG PROJECT_DIR=/home/jovyan/whateverisoksinceitwillbeoverwritten
 # it should be defined here, despite it will overwritten by that in docker-compose.yml
 
 WORKDIR $PROJECT_DIR
@@ -66,8 +75,6 @@ RUN mamba install --quiet --yes \
 
 # Add julia packages and precompile
 # NOTE: These packages will be added under @#.# (e.g. @v1.6)
-# PackageSpec(name=""), \
-# You can specify version: PackageSpec(name="Pluto", version="0.17"), \
 RUN julia -e 'using Pkg; Pkg.update()' \
     && julia -e '\
         using Pkg; \
@@ -102,19 +109,20 @@ ENV JULIA_PROJECT=@.
 
 # KEYNOTE: Alternative approach for setting up the environment: use environment.yml, Project.toml and Manifest.toml to add python and julia packages
 #
-# CHECKPOINT: Failed in the following: 
+# CHECKPOINT: Failed in the following:
 # Set up the environment for python, jupyter and etc.:
 # COPY .devcontainer/environment.yml ${PROJECT_DIR}
 # RUN conda env update --file environment.yml \
 #     && rm -f environment.yml \
 #
-# CHECKPOINT: 
+# CHECKPOINT:
 # COPY .devcontainer/environment.yml .devcontainer/Project.toml .devcontainer/Manifest.toml ${PROJECT_DIR}
 # RUN conda env update --file environment.yml \
 #     && rm -f environment.yml \
 #     && mkdir -p ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`
 #     && cp Project.toml Manifest.toml ~/.julia/environments/v`echo ${VARIANT} | cut -d. -f 1,2`/Project.toml \
 #     && julia -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
+
 
 
 
@@ -155,7 +163,7 @@ RUN inv --print-completion-script bash > ~/.invoke-completion.sh \
     && dvc completion -s bash | sudo tee /etc/bash_completion.d/dvc \
     && echo -e "alias juliaclient='julia --startup-file=no -e \"using DaemonMode; runargs()\"'" >> ~/.bashrc
 
-# Install Starship
+# Install Starship [Customizable Shell Prompt](https://starship.rs/)
 RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y \
     && echo 'eval "$(starship init bash)"' >> ~/.bashrc \
     && mkdir -p ~/.config \
