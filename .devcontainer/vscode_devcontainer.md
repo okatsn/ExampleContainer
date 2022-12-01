@@ -248,3 +248,108 @@ See [Using docker](https://github.com/James-Yu/LaTeX-Workshop/wiki/Install#using
 See 
 - 鳥哥的 Linux 私房菜
 - 鳥哥的 Linux 私房菜 > 使用者權限(這是關鍵)
+
+## Permissions
+
+Permissions:
+- View: `ls -la `
+- [Understanding File Permissions](https://www.elated.com/understanding-permissions/)
+- [Permissions!](https://ryanstutorials.net/linuxtutorial/permissions.php)
+
+List all user/group
+- `awk -F: '{printf "%s:%s\n",$1,$3}' /etc/passwd`
+- See [Command to list all users with their UID](https://askubuntu.com/questions/645236/command-to-list-all-users-with-their-uid)
+
+
+
+
+
+
+Get Environment Variable from Docker Container
+- `docker exec container env`
+-  See https://stackoverflow.com/questions/34051747/get-environment-variable-from-docker-container
+
+Add new user
+- `useradd -g 1000 jovyan`: Add user "jovyan" who belongs to the group of id 1000.
+    > - [Linux sysadmin basics: User account management with UIDs and GIDs](https://www.redhat.com/sysadmin/user-account-gid-uid)
+    > - [default user in WSL](https://superuser.com/questions/1266881/how-to-change-the-default-user-name-in-wsl)
+    > - [How to switch between users on one terminal?](https://unix.stackexchange.com/questions/3568/how-to-switch-between-users-on-one-terminal)
+    > - [How to set user of Docker container](https://codeyarns.com/tech/2017-07-21-how-to-set-user-of-docker-container.html#gsc.tab=0)
+    > - https://stackoverflow.com/questions/27701930/how-to-add-users-to-docker-container
+    > - https://linuxize.com/post/how-to-create-users-in-linux-using-the-useradd-command/
+- `useradd -r -d /workspace -g 100 jovyan`
+    > - Create a user of name jovyan whose user ID (UID) by default is 1000. It is in the 'users' group of GID=100.
+    > - Create a system account (-r) with its home directory being WORKSPACE_DIR where the user 
+
+
+Add or List Group:
+- https://linuxize.com/post/how-to-create-groups-in-linux/
+- https://linuxize.com/post/how-to-list-groups-in-linux/
+
+Change owner of the folder `/workspace` to jovyan of group id 1000.
+- `chown jovyan:1000 /workspace`
+- https://linuxize.com/post/linux-chown-command/
+- https://blog.gtwang.org/linux/linux-chown-command-tutorial/
+
+
+
+Change modifiability
+- `chmod a+w projects`: makes the directory `projects` modifiable to everyone.
+- `chmod -R a+w *`: makes everything under the current directory modifiable to everyone.
+- See [chmod的用法 - 痞客興的部落格](https://charleslin74.pixnet.net/blog/post/419874889)
+- [How do I change directory permissions](https://www.pluralsight.com/blog/it-ops/linux-file-permissions)
+
+## Install packages
+`apt-get` by default install packages for all users
+
+## Others
+### `sed` 更改/取代內文
+```docker
+RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
+    sed -i.bak -e 's/^@includedir/#@includedir/' /etc/sudoers && \
+    echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+```
+
+### `rm`
+`rm -r *` remove recursively everything in the current directory
+
+### Path and Directory
+Backslash does matter!
+- "workspace": relative directory
+- "/workspace": absolute directory
+- "/workspace/" can be wrong but I'm not very sure
+
+### `sudo`
+root can modify everything; thus, it is easy to break the system and handling a non-system wide job as the root should be avoided.
+However, there are cases that a user needs to do something that root can do.
+In this case, we can set the user a "sudoer".
+
+Make jovyan a sudoer: 
+- `usermod -aG sudo jovyan` (add jovyan to Group sudo)
+
+List files in root to check if I'm already a sudoer
+- `sudo -S ls -la /root` and enter the password manually
+- `echo 1234 | sudo -S ls -la /root` where 1234 is the password of the user.
+
+Pass password 1234 to sudo; get script from curl; execute script and say yes to all.
+- `echo 1234 | sudo -S curl -fsSL https://starship.rs/install.sh | sh -s -- -y`
+- this is a pipeline, with each execution separated by `|` (vertical bar: pass output to the next as input)
+
+
+
+### `curl`
+
+In https://starship.rs/guide/#%F0%9F%9A%80-installation the installation is done with `curl -sS https://starship.rs/install.sh | sh`, where a prompt pops that you have to say yes. An alternative way to install starship referring https://github.com/dbushell/docker-ubuntu/blob/main/Dockerfile is: 
+
+`sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y`
+- `-c` flag: to pass arg as string. See https://stackoverflow.com/questions/3985193/what-is-bin-sh-c
+- `-- -y` say yes to any prompts.
+
+
+Get script and save it a local file with `-o` (output) flag
+- `curl -fsSL https://starship.rs/install.sh -o /home/jovyan/install-starship-tmp`
+- For Curl flag `-fsSL`, see: https://explainshell.com/explain?cmd=curl+-fsSL+example.org
+
+
+
+
