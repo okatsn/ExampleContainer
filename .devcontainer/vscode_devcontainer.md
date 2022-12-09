@@ -1,4 +1,5 @@
 [TOC]
+
 ## Basic knowledge
 
 A **host** is an operating system (which usually refers to Linux); a host can be a real machine or a virtual machine.
@@ -336,8 +337,8 @@ Pass password 1234 to sudo; get script from curl; execute script and say yes to 
 - this is a pipeline, with each execution separated by `|` (vertical bar: pass output to the next as input)
 
 
-
-### `curl`
+## Web tools
+### `curl`: get content from url
 
 In https://starship.rs/guide/#%F0%9F%9A%80-installation the installation is done with `curl -sS https://starship.rs/install.sh | sh`, where a prompt pops that you have to say yes. An alternative way to install starship referring https://github.com/dbushell/docker-ubuntu/blob/main/Dockerfile is: 
 
@@ -353,3 +354,10 @@ Get script and save it a local file with `-o` (output) flag
 
 
 
+## IO
+### `mkdir`
+Example 
+```bash
+mkdir -p ~/.config
+```
+make directory ".config". The `-p` flag creates all parent/sub directory in the path with no error occurred if a directory already exists.

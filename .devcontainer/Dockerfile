@@ -173,3 +173,5 @@ RUN fix-permissions /home/$NB_USER
 
 # Pluto port
 EXPOSE 1234
+
+# TODO: merge Dockerfile, docker-compose.yml and devcontainer.json with those in MyPlayground (after you feel it is stable)
